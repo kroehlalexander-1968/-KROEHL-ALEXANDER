@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PERSONAL FILE // ALEXANDER KROEHL</title>
+
+<style>
+/* =========================================================
+   GRUNDLAYOUT
+========================================================= */
+
+:root {
+    --bg: #050706;
+    --panel: #0b100c;
+    --panel2: #101710;
+    --line: #354536;
+    --green: #9bad98;
+    --green2: #657765;
+    --white: #dce5da;
+    --red: #8e4545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(circle at 50% 0%, #172019 0%, var(--bg) 45%),
+        var(--bg);
+
+    color: var(--green);
+    font-family: "Courier New", monospace;
+    min-height: 100vh;
+}
+
+/* Scanlines */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.018) 0px,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    z-index: 999;
+}
+
+/* =========================================================
+   CONTENEUR
+========================================================= */
+
+.container {
+    width: min(1150px, 92%);
+    margin: auto;
+    padding: 30px 0 70px;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 1px solid var(--line);
+    background: rgba(10,15,11,.8);
+
+    padding: 12px 16px;
+    margin-bottom: 25px;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.status {
+    color: #91a78f;
+}
+
+.status::before {
+    content: "●";
+    margin-right: 8px;
+    color: #718c70;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    border: 1px solid var(--line);
+    background: linear-gradient(
+        135deg,
+        rgba(20,28,21,.9),
+        rgba(5,8,6,.95)
+    );
+
+    padding: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.classification {
+    color: var(--green2);
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+}
+
+h1 {
+    color: var(--white);
+
+    font-size: clamp(
+        32px,
+        7vw,
+        76px
+    );
+
+    line-height: 1;
+    letter-spacing: 7px;
+
+    text-shadow:
+        0 0 15px rgba(150,180,150,.15);
+}
+
+.subtitle {
+    margin-top: 18px;
+
+    color: var(--green2);
+    font-size: 13px;
+    letter-spacing: 3px;
+}
+
+/* CLASSIFIED */
+
+.stamp {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+
+    border: 2px solid var(--red);
+    color: var(--red);
+
+    padding: 8px 14px;
+
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+
+    transform: rotate(-7deg);
+    opacity: .8;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+    margin-top: 35px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border-bottom: 1px solid var(--line);
+
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+
+    color: var(--white);
+
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.section-title span {
+    color: var(--green2);
+}
+
+/* =========================================================
+   PERSONAL DATA
+========================================================= */
+
+.profile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.data {
+    background: rgba(15,22,16,.8);
+
+    border: 1px solid var(--line);
+    border-left: 3px solid #526952;
+
+    padding: 17px;
+}
+
+.label {
+    display: block;
+
+    color: var(--green2);
+
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.value {
+    color: var(--white);
+    font-size: 15px;
+}
+
+/* =========================================================
+   PHOTO GALLERY
+========================================================= */
+
+.gallery {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.photo {
+    position: relative;
+
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    background: #090d09;
+
+    border: 1px solid var(--line);
+
+    cursor: pointer;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    filter:
+        grayscale(35%)
+        contrast(1.1)
+        brightness(.85);
+
+    transition:
+        transform .4s,
+        filter .4s;
+}
+
+.photo:hover img {
+    transform: scale(1.06);
+
+    filter:
+        grayscale(0%)
+        contrast(1.05)
+        brightness(1);
+}
+
+.photo-number {
+    position: absolute;
+
+    top: 8px;
+    left: 8px;
+
+    background: rgba(0,0,0,.75);
+
+    border: 1px solid var(--line);
+
+    padding: 5px 8px;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   VIDEOS
+========================================================= */
+
+.videos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.video-box {
+    border: 1px solid var(--line);
+    background: #050705;
+}
+
+.video-label {
+    padding: 10px;
+
+    border-bottom: 1px solid var(--line);
+
+    font-size: 11px;
+    letter-spacing: 2px;
+
+    color: var(--green2);
+}
+
+video {
+    width: 100%;
+    display: block;
+    background: #000;
+}
+
+/* =========================================================
+   DOCUMENT INFO
+========================================================= */
+
+.document {
+    border: 1px solid var(--line);
+
+    background:
+        linear-gradient(
+            rgba(20,28,21,.7),
+            rgba(7,10,7,.9)
+        );
+
+    padding: 25px;
+
+    line-height: 1.8;
+
+    color: #829281;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    margin-top: 55px;
+
+    border-top: 1px solid var(--line);
+
+    padding-top: 20px;
+
+    text-align: center;
+
+    color: #4e5e4f;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    line-height: 2;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .container {
+        width: 94%;
+    }
+
+    header {
+        padding: 25px;
+    }
+
+    h1 {
+        letter-spacing: 3px;
+    }
+
+    .stamp {
+        position: static;
+
+        display: inline-block;
+
+        margin-top: 25px;
+
+        transform: rotate(-4deg);
+    }
+
+    .profile {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .videos {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- =====================================================
+     TOP
+===================================================== -->
+
+<div class="topbar">
+
+    <div>
+        SYSTEM // PERSONAL ARCHIVE
+    </div>
+
+    <div class="status">
+        SYSTEM ONLINE
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="classification">
+        // CLASSIFIED PERSONNEL RECORD //
+    </div>
+
+    <h1>
+        ALEXANDER<br>
+        KROEHL
+    </h1>
+
+    <div class="subtitle">
+        PERSONENAKTE · VERTRAULICH · ARCHIV
+    </div>
+
+    <div class="stamp">
+        VERTRAULICH
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     PERSONENDATEN
+===================================================== -->
+
+<section>
+
+    <div class="section-title">
+        <span>[01]</span>
+        PERSONENDATEN
+    </div>
+
+    <div class="profile">
+
+        <div class="data">
+
+            <span class="label">
+                NACHNAME
+            </span>
+
+            <span class="value">
+                Kroehl
+            </span>
+
+        </div>
+
+
+        <div class="data">
+
+            <span class="label">
+                VORNAME
+            </span>
+
+            <span class="value">
+                Alexander
+            </span>
+
+        </div>
+
+
+        <div class="data">
+
+            <span class="label">
+                GEBURTSDATUM
+            </span>
+
+            <span class="value">
+                11.08.1968
+            </span>
+
+        </div>
+
+
+        <div class="data">
+
+            <span class="label">
+                ALTER
+            </span>
+
+            <span class="value">
+                58 Jahre
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOTOS
+===================================================== -->
+
+<section>
+
+    <div class="section-title">
+        <span>[02]</span>
+        FOTOARCHIV
+    </div>
+
+
+    <div class="gallery">
+
+
+        <!-- FOTO 01 -->
+
+        <div class="photo">
+
+            <img
+                src="foto1.jpg"
+                alt="Archivfoto 01"
+            >
+
+            <div class="photo-number">
+                FILE 001
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 02 -->
+
+        <div class="photo">
+
+            <img
+                src="foto2.jpg"
+                alt="Archivfoto 02"
+            >
+
+            <div class="photo-number">
+                FILE 002
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 03 -->
+
+        <div class="photo">
+
+            <img
+                src="foto3.jpg"
+                alt="Archivfoto 03"
+            >
+
+            <div class="photo-number">
+                FILE 003
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 04 -->
+
+        <div class="photo">
+
+            <img
+                src="foto4.jpg"
+                alt="Archivfoto 04"
+            >
+
+            <div class="photo-number">
+                FILE 004
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 05 -->
+
+        <div class="photo">
+
+            <img
+                src="foto5.jpg"
+                alt="Archivfoto 05"
+            >
+
+            <div class="photo-number">
+                FILE 005
+            </div>
+
+        </div>
+
+
+        <!-- FOTO 06 -->
+
+        <div class="photo">
+
+            <img
+                src="foto6.jpg"
+                alt="Archivfoto 06"
+            >
+
+            <div class="photo-number">
+                FILE 006
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VIDEOS
+===================================================== -->
+
+<section>
+
+    <div class="section-title">
+        <span>[03]</span>
+        VIDEOARCHIV
+    </div>
+
+
+    <div class="videos">
+
+
+        <!-- VIDEO 01 -->
+
+        <div class="video-box">
+
+            <div class="video-label">
+                VIDEO FILE // 001
+            </div>
+
+            <video controls preload="metadata">
+
+                <source
+                    src="video1.mp4"
+                    type="video/mp4"
+                >
+
+                Ihr Browser unterstützt dieses Videoformat nicht.
+
+            </video>
+
+        </div>
+
+
+        <!-- VIDEO 02 -->
+
+        <div class="video-box">
+
+            <div class="video-label">
+                VIDEO FILE // 002
+            </div>
+
+            <video controls preload="metadata">
+
+                <source
+                    src="video2.mp4"
+                    type="video/mp4"
+                >
+
+                Ihr Browser unterstützt dieses Videoformat nicht.
+
+            </video>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ARCHIVNOTIZ
+===================================================== -->
+
+<section>
+
+    <div class="section-title">
+        <span>[04]</span>
+        ARCHIVSTATUS
+    </div>
+
+    <div class="document">
+
+        <p>
+            DOKUMENTSTATUS: AKTIV
+        </p>
+
+        <p>
+            DATENBANK: PERSONAL ARCHIVE
+        </p>
+
+        <p>
+            ZUGRIFFSSTUFE: AUTHORIZED
+        </p>
+
+        <p>
+            LETZTE AKTUALISIERUNG:
+            16.08.2026
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    PERSONAL ARCHIVE SYSTEM<br>
+
+    CLASSIFIED INFORMATION · AUTHORIZED ACCESS ONLY<br>
+
+    © 2026 KROEHL ARCHIVE
+
+</footer>
+
+
+</div>
+
+</body>
+</html>
